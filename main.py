@@ -1,19 +1,12 @@
 import gym
 
+from DQN import DQN
+
 EPISODES_NUM = 1
 MAX_ITERATIONS = 5000
-TEST_NUM = 10
-
-
-class DQN:
-    def __init__(self, env):
-        self.env = env
-
-    def get_action(self, obs, training):
-        return self.env.action_space.sample()
-
-    def update(self, obs, action, next_obs, reward):
-        pass
+TEST_NUM = 1
+IMAGE_TARGET_WIDTH = 84
+IMAGE_TARGET_HEIGHT = 84
 
 
 def train(agent, env):
@@ -42,12 +35,12 @@ def test(agent, env):
 
 
 if __name__ == "__main__":
-    environment = gym.make('StarGunner-v0')
-    agent_DQN = DQN(environment)
+    environment = gym.make("StarGunner-v0")
+    agent_DQN = DQN(environment, IMAGE_TARGET_WIDTH, IMAGE_TARGET_HEIGHT)
     train(agent_DQN, environment)
 
-    # test_reward = 0
-    # for _ in range(TEST_NUM):
-    #     test_reward += test(agent_DQN, environment)
-    #
-    # print("Avg test reward = " + str(test_reward / TEST_NUM))
+    test_reward = 0
+    for _ in range(TEST_NUM):
+        test_reward += test(agent_DQN, environment)
+
+    print("Avg test reward = " + str(test_reward / TEST_NUM))
