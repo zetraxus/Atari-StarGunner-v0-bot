@@ -1,12 +1,11 @@
 import gym
 
 from DQN import DQN
+from image_transformations import process_frame
 
 EPISODES_NUM = 1
 MAX_ITERATIONS = 5000
 TEST_NUM = 1
-IMAGE_TARGET_WIDTH = 84
-IMAGE_TARGET_HEIGHT = 84
 
 
 def train(agent, env):
@@ -36,7 +35,7 @@ def test(agent, env):
 
 if __name__ == "__main__":
     environment = gym.make("StarGunner-v0")
-    agent_DQN = DQN(environment, IMAGE_TARGET_WIDTH, IMAGE_TARGET_HEIGHT)
+    agent_DQN = DQN(environment)
     train(agent_DQN, environment)
 
     test_reward = 0

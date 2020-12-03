@@ -1,10 +1,11 @@
 import cv2
+import numpy as np
 
 
-def preprocess_image(img, target_width, target_height):
-    # Convert RGB to BGR for cv2
-    img = img[:, :, ::-1]
-    # todo - firstly remove boundary
-    downsample_img = cv2.resize(img, (target_width, target_height))
-    greyscale_downsample_img = cv2.cvtColor(downsample_img, cv2.COLOR_RGB2GRAY)
-    return greyscale_downsample_img
+def process_frame(frame, target=(84, 84)):
+    frame = frame.astype(np.uint8)
+    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+    frame = frame[34:34 + 160, :160]  # crop image - TODO do it better
+    frame = cv2.resize(frame, target, interpolation=cv2.INTER_NEAREST)
+    frame = frame.reshape((*target, 1))
+    return frame
