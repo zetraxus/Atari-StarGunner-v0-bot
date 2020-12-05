@@ -1,11 +1,10 @@
 import gym
 
 from DQN import DQN
-from image_transformations import process_frame
 
-EPISODES_NUM = 1
+EPISODES_NUM = 3
 MAX_ITERATIONS = 5000
-TEST_NUM = 1
+TEST_NUM = 3
 
 
 def train(agent, env):
@@ -13,6 +12,7 @@ def train(agent, env):
         obs = env.reset()
         total_reward, iteration, done = False, 0, 0
         while not done and iteration < MAX_ITERATIONS:
+            env.render()
             action = agent.get_action(obs, training=True)
             next_obs, reward, done, _ = env.step(action)
             agent.update(obs, action, next_obs, reward)
@@ -25,6 +25,7 @@ def test(agent, env):
     obs = env.reset()
     total_reward, done = 0, False
     while not done:
+        env.render()
         action = agent.get_action(obs, training=False)
         next_obs, reward, done, _ = env.step(action)
         obs, total_reward = next_obs, total_reward + reward
