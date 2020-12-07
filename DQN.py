@@ -5,9 +5,7 @@ from image_transformations import process_frame
 from q_network import build_q_network
 
 EPSILON_MIN = 0.1
-max_num_steps = 1000 * 10
 EPSILON_DECAY = 0.01
-# EPSILON_DECAY = 500 * EPSILON_MIN / max_num_steps
 DISCOUNT_FACTOR = 0.95
 
 

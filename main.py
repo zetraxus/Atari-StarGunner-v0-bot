@@ -1,5 +1,6 @@
-import gym
+from datetime import datetime
 
+import gym
 from DQN import DQN
 
 EPISODES_NUM = 20
@@ -20,7 +21,7 @@ def train(agent, env):
             agent.update(obs, action, next_obs, reward)
             obs, total_reward, iteration = next_obs, total_reward + reward, iteration + 1
 
-        print("Episode = " + str(episode) + " -> reward = " + str(total_reward) + " it = " + str(iteration))
+        print(str(datetime.now().strftime("%H:%M:%S")) + " Episode = " + str(episode) + " -> reward = " + str(total_reward) + " it = " + str(iteration))
 
 
 def test(agent, env):
@@ -46,3 +47,13 @@ if __name__ == "__main__":
         test_reward += test(agent_DQN, environment)
 
     print("Avg test reward = " + str(test_reward / TEST_NUM))
+
+# todo
+# environment.frameskip = 4 ?
+# history_length
+# batch learning
+# q_network (val + adv)
+# epsilon ?
+# process_frame
+# use "action"
+# discount factor
