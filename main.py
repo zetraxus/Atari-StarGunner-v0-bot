@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import gym
-from DQN import DQN
+from agent import Agent
 
 EPISODES_NUM = 20
 MAX_ITERATIONS = 10000
@@ -13,7 +13,6 @@ def train(agent, env):
     for episode in range(1, EPISODES_NUM + 1):
         obs = env.reset()
         total_reward, iteration, done = 0, 0, False
-        agent.epsilon = 1.0     # todo should we reset epsilon?
         while not done and iteration < MAX_ITERATIONS:
             env.render() if RENDER else None
             action = agent.get_action(obs, training=True)
@@ -40,12 +39,12 @@ def test(agent, env):
 
 if __name__ == "__main__":
     environment = gym.make("StarGunner-v0")
-    agent_DQN = DQN(environment.action_space)
-    train(agent_DQN, environment)
+    agent = Agent(environment.action_space)
+    train(agent, environment)
 
     test_reward = 0
     for _ in range(TEST_NUM):
-        test_reward += test(agent_DQN, environment)
+        test_reward += test(agent, environment)
 
     print("Avg test reward = " + str(test_reward / TEST_NUM))
 
@@ -53,7 +52,6 @@ if __name__ == "__main__":
 # environment.frameskip = 4 ?
 # history_length
 # batch learning
-# q_network (val + adv)
 # epsilon ?
-# process_frame
 # discount factor
+# save/load weights

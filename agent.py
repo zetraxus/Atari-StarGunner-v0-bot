@@ -10,7 +10,7 @@ EPSILON_DECAY = 0.01
 DISCOUNT_FACTOR = 0.95
 
 
-class DQN:
+class Agent:
     def __init__(self, action_space):
         self.action_space = action_space
         self.network = build_q_network(n_actions=action_space.n)
@@ -18,8 +18,6 @@ class DQN:
 
     def get_action(self, obs, training):
         frame = process_frame(obs)
-
-        # todo: change
         if self.epsilon > EPSILON_MIN:
             self.epsilon -= EPSILON_DECAY
         if (not training) or (np.random.random() > self.epsilon):
