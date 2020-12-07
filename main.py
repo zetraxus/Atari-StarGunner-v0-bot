@@ -2,17 +2,19 @@ import gym
 
 from DQN import DQN
 
-EPISODES_NUM = 3
-MAX_ITERATIONS = 5000
-TEST_NUM = 3
+EPISODES_NUM = 20
+MAX_ITERATIONS = 10000
+TEST_NUM = 10
+RENDER = False
 
 
 def train(agent, env):
     for episode in range(1, EPISODES_NUM + 1):
         obs = env.reset()
-        total_reward, iteration, done = False, 0, 0
+        total_reward, iteration, done = 0, 0, False
+        agent.epsilon = 1.0     # todo should we reset epsilon?
         while not done and iteration < MAX_ITERATIONS:
-            env.render()
+            env.render() if RENDER else None
             action = agent.get_action(obs, training=True)
             next_obs, reward, done, _ = env.step(action)
             agent.update(obs, action, next_obs, reward)
@@ -25,7 +27,7 @@ def test(agent, env):
     obs = env.reset()
     total_reward, done = 0, False
     while not done:
-        env.render()
+        env.render() if RENDER else None
         action = agent.get_action(obs, training=False)
         next_obs, reward, done, _ = env.step(action)
         obs, total_reward = next_obs, total_reward + reward
@@ -36,7 +38,7 @@ def test(agent, env):
 
 if __name__ == "__main__":
     environment = gym.make("StarGunner-v0")
-    agent_DQN = DQN(environment)
+    agent_DQN = DQN(environment.action_space)
     train(agent_DQN, environment)
 
     test_reward = 0

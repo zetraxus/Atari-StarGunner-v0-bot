@@ -6,7 +6,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
 
-def build_q_network(n_actions, learning_rate=0.001, input_shape=(84, 84), history_length=1):
+def build_q_network(n_actions, learning_rate=0.01, input_shape=(84, 84), history_length=1):
     model_input = Input(shape=(input_shape[0], input_shape[1], history_length))
     x = Lambda(lambda layer: layer / 255)(model_input)
 

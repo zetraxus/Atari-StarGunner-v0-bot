@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
 
-TARGET_LENGTH = 84
+TARGET_SIZE = 84
 
 
-def process_frame(frame, target=(TARGET_LENGTH, TARGET_LENGTH)):
+def process_frame(frame, target=(TARGET_SIZE, TARGET_SIZE)):
     frame = frame.astype(np.uint8)
     frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
     frame = frame[36:36 + 150, 10:10+150]  # crop image - TODO do it better
