@@ -21,7 +21,8 @@ def train(agent, env):
             agent.update(obs, action, next_obs, reward)
             obs, total_reward, iteration = next_obs, total_reward + reward, iteration + 1
 
-        print(str(datetime.now().strftime("%H:%M:%S")) + " Episode = " + str(episode) + " -> reward = " + str(total_reward) + " it = " + str(iteration))
+        print("{0} Episode = {1} -> reward = {2} it = {3}".format(str(datetime.now().strftime("%H:%M:%S")),
+                                                                  str(episode), str(total_reward), str(iteration)))
 
 
 def test(agent, env):
@@ -55,5 +56,4 @@ if __name__ == "__main__":
 # q_network (val + adv)
 # epsilon ?
 # process_frame
-# use "action"
 # discount factor

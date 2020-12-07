@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+from tensorflow.python.keras.utils.np_utils import to_categorical
 
 from image_transformations import process_frame
 from q_network import build_q_network
@@ -35,7 +36,8 @@ class DQN:
 
         with tf.GradientTape() as tape:
             q_values = self.network(frame)
-            Q = tf.reduce_sum(q_values, axis=1)
+            action_one_hot = to_categorical(action, self.action_space.n)
+            Q = tf.reduce_sum(tf.multiply(q_values, action_one_hot), axis=1)
             loss = tf.keras.losses.Huber()(target_q, Q)
 
         model_gradients = tape.gradient(loss, self.network.trainable_variables)
