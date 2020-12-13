@@ -6,7 +6,7 @@ from image_transformations import process_frame
 from q_network import build_q_network
 
 EPSILON_MIN = 0.1
-EPSILON_DECAY = 0.01
+EPSILON_DECAY = 0.00001
 DISCOUNT_FACTOR = 0.95
 
 
@@ -15,6 +15,13 @@ class Agent:
         self.action_space = action_space
         self.network = build_q_network(n_actions=action_space.n)
         self.epsilon = 1.0
+        self.lives = 5
+
+    def decrement_lives(self):
+        self.lives -= 1
+
+    def get_lives(self):
+        return self.lives
 
     def get_action(self, obs, training):
         frame = process_frame(obs)
