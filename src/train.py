@@ -1,6 +1,6 @@
 from datetime import datetime
 
-EPISODES_NUM = 5
+EPISODES_NUM = 10
 MAX_ITERATIONS = 5000
 START_LEARNING_ITERATION = 150
 

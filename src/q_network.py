@@ -4,7 +4,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
 
-def build_q_network(n_actions, input_shape, learning_rate=0.01, history_length=1):
+def build_q_network(n_actions, input_shape, learning_rate=0.001, history_length=1):
     model_input = Input(shape=(input_shape[0], input_shape[1], history_length))
     x = Conv2D(32, (8, 8), strides=4, activation='relu')(model_input)
     x = Conv2D(64, (4, 4), strides=2, activation='relu')(x)
