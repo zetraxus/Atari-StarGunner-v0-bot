@@ -8,7 +8,7 @@ from src.q_network import build_q_network
 EPSILON_MIN = 0.1
 EPSILON_DECAY = 0.00001
 DISCOUNT_FACTOR = 0.95
-TARGET_SIZE = (70, 70)
+TARGET_SIZE = (84, 84)
 
 
 class Agent:
