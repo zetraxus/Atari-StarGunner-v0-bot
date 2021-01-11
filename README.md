@@ -1,3 +1,3 @@
-Algorithms:
--> DQN
+Algorithms:  
+-> DQN  
 -> Sarsa
