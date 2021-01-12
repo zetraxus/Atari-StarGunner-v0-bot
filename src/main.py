@@ -7,7 +7,7 @@ import tensorflow as tf
 
 MODEL_WEIGHTS_PATH = "model_weights/network_weights"
 SAVE_WEIGHTS = True
-LOAD_WEIGHTS = False
+LOAD_WEIGHTS = True
 RENDER = False
 
 if __name__ == "__main__":
