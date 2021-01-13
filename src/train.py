@@ -33,9 +33,9 @@ def train(agent, env, save_weights, model_weights_path, render):
                 agent.update(obs, action, next_obs, reward_for_learning)
             obs, total_reward, iteration = next_obs, total_reward + game_reward, iteration + 1
 
-        print("{0} Episode = {1} -> reward = {2} it = {3}, epsilon = {4}".format(
+        print("{0} Episode = {1} -> reward = {2} it = {3}, epsilon = {4}, algorithm = {5}".format(
             str(datetime.now().strftime("%H:%M:%S")), str(episode), str(total_reward),
-            str(iteration), str(agent.epsilon)))
+            str(iteration), str(agent.epsilon), str(agent.algorithm)))
 
     if save_weights:
         agent.save_network(model_weights_path)
