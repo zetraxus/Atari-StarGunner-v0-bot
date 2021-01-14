@@ -4,6 +4,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.python.keras.utils.np_utils import to_categorical
 
+from src.buffer import Buffer
 from src.image_transformations import process_frame
 from src.q_network import build_q_network
 
@@ -11,6 +12,7 @@ EPSILON_MIN = 0.1
 EPSILON_DECAY = 0.00001
 DISCOUNT_FACTOR = 0.95
 TARGET_SIZE = (84, 84)
+BATCH_SIZE = 32
 
 
 class Agent:
@@ -20,6 +22,7 @@ class Agent:
         self.network = build_q_network(n_actions=action_space.n, input_shape=TARGET_SIZE)
         self.epsilon = 1.0
         self.lives = 5
+        self.buffer = Buffer()
 
     def decrement_lives(self):
         self.lives -= 1
@@ -44,14 +47,18 @@ class Agent:
                                            next_frame) if self.algorithm == Algorithm.SARSA else self.__calc_q_learn_q(next_frame)
         target_q = reward + (DISCOUNT_FACTOR * calculated_q)
 
-        with tf.GradientTape() as tape:
-            q_values = self.network(frame)
-            action_one_hot = to_categorical(action, self.action_space.n)
-            Q = tf.reduce_sum(tf.multiply(q_values, action_one_hot), axis=1)
-            loss = tf.keras.losses.Huber()(target_q, Q)
+        self.buffer.add_experience(frame, next_frame, target_q, action)
 
-        model_gradients = tape.gradient(loss, self.network.trainable_variables)
-        self.network.optimizer.apply_gradients(zip(model_gradients, self.network.trainable_variables))
+        if self.buffer.size() == BATCH_SIZE:
+            with tf.GradientTape() as tape:
+                q_values = self.network(self.buffer.buffer_frames)
+                action_one_hot = to_categorical(self.buffer.buffer_actions, self.action_space.n)
+                Q = tf.reduce_sum(tf.multiply(q_values, action_one_hot), axis=1)
+                loss = tf.keras.losses.Huber()(self.buffer.buffer_targets_q, Q)
+
+            model_gradients = tape.gradient(loss, self.network.trainable_variables)
+            self.network.optimizer.apply_gradients(zip(model_gradients, self.network.trainable_variables))
+            self.buffer.clear()
 
     def __calc_q_learn_q(self, next_frame):
         return self.network.predict(next_frame)[0].max()

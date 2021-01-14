@@ -22,4 +22,4 @@ if __name__ == "__main__":
         train(agent, environment, SAVE_WEIGHTS, MODEL_WEIGHTS_PATH, RENDER)
 
     print("[{0}] Avg test reward = ".format(str(agent.algorithm)) + str(test(agent, environment, RENDER)))
-
+    
