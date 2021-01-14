@@ -1,22 +1,22 @@
-TEST_NUM = 10
+from src.utils import print_logs
 
 
-def single_test(agent, env, render):
+def single_test(agent, env, render, save_results, log_filename):
     obs = env.reset()
     total_reward, done = 0, False
     while not done:
         env.render() if render else None
-        action = agent.get_action(obs, training=False)
+        action = agent.get_action(training=False, obs=obs)
         next_obs, reward, done, _ = env.step(action)
         obs, total_reward = next_obs, total_reward + reward
 
-    print("Reward (test) = " + str(total_reward))
+    print_logs(save_results, log_filename, "Reward (test) = " + str(total_reward))
     return total_reward
 
 
-def test(agent, environment, render):
+def test(agent, environment, render, save_results, log_filename, params):
     test_reward = 0
-    for _ in range(TEST_NUM):
-        test_reward += single_test(agent, environment, render)
+    for _ in range(params['TEST_NUM']):
+        test_reward += single_test(agent, environment, render, save_results, log_filename)
 
-    return test_reward / TEST_NUM
+    return test_reward / params['TEST_NUM']

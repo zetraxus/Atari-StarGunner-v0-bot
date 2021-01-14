@@ -3,21 +3,30 @@ import gym
 from src.agent import Agent
 from src.test import test
 from src.train import train
-import tensorflow as tf
+from src.agent import Algorithm
+from datetime import datetime
 
-MODEL_WEIGHTS_PATH = "model_weights/network_weights"
-SAVE_WEIGHTS = True
-LOAD_WEIGHTS = True
-RENDER = False
+from src.utils import print_logs
+
+MODEL_WEIGHTS_PATH = "model_weights/"
+RESULTS_PATH = "../results/"
+SAVE_WEIGHTS, LOAD_WEIGHTS, RENDER, SAVE_RESULTS = True, False, False, True
+ALGORITHMS = [Algorithm.Q_LEARNING, Algorithm.SARSA]
+params = {'TEST_NUM': 10, 'EPISODES_NUM': 20, 'START_LEARNING_ITERATION': 100, 'PENALTY': -10000,
+          'PREMIUM': 200, 'LEARNING_RATE': 0.0005}
 
 if __name__ == "__main__":
-    print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
     environment = gym.make("StarGunner-v0", frameskip=4)
-    agent = Agent(environment.action_space)
+    log_filename = datetime.now().strftime(RESULTS_PATH + "result_%d-%m-%Y_%H:%M:%S")
 
-    if LOAD_WEIGHTS:
-        agent.load_network(MODEL_WEIGHTS_PATH)
-    else:
-        train(agent, environment, SAVE_WEIGHTS, MODEL_WEIGHTS_PATH, RENDER)
+    for algorithm in ALGORITHMS:
+        print_logs(SAVE_RESULTS, log_filename, str(algorithm.name) + ' - ' + str(params))
+        agent = Agent(algorithm, environment.action_space, params['LEARNING_RATE'])
+        if LOAD_WEIGHTS:
+            agent.load_network(MODEL_WEIGHTS_PATH + algorithm.name)
+        else:
+            train(agent, environment, SAVE_WEIGHTS, MODEL_WEIGHTS_PATH + algorithm.name, RENDER, SAVE_RESULTS,
+                  log_filename, params)
 
-    print("Avg test reward = " + str(test(agent, environment, RENDER)))
+        result = test(agent, environment, RENDER, SAVE_RESULTS, log_filename, params)
+        print_logs(SAVE_RESULTS, log_filename, "Avg test reward = " + str(result))
