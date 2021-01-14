@@ -2,7 +2,7 @@ from datetime import datetime
 
 EPISODES_NUM = 10
 MAX_ITERATIONS = 5000
-START_LEARNING_ITERATION = 150
+START_LEARNING_ITERATION = 100
 
 PENALTY = -500
 PREMIUM = 200
@@ -17,7 +17,7 @@ def get_reward_for_learning(agent, game_reward, info):
     if game_reward > 0:
         return PREMIUM
     else:
-        return 0
+        return 1
 
 
 def train(agent, env, save_weights, model_weights_path, render):

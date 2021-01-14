@@ -21,10 +21,3 @@ if __name__ == "__main__":
         train(agent, environment, SAVE_WEIGHTS, MODEL_WEIGHTS_PATH, RENDER)
 
     print("Avg test reward = " + str(test(agent, environment, RENDER)))
-
-# todo
-# history_length
-# batch learning
-# discount factor
-# input shape
-# gpu
