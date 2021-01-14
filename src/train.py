@@ -26,7 +26,7 @@ def train(agent, env, save_weights, model_weights_path, render):
         total_reward, iteration, done = 0, 0, False
         while not done and iteration < MAX_ITERATIONS:
             env.render() if render else None
-            action = agent.get_action(obs, training=True)
+            action = agent.get_action(training=True, obs=obs)
             next_obs, game_reward, done, info = env.step(action)
             if iteration > START_LEARNING_ITERATION:
                 reward_for_learning = get_reward_for_learning(agent, game_reward, info)

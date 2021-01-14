@@ -1,12 +1,12 @@
 from enum import Enum
 
+import cv2
 import numpy as np
 import tensorflow as tf
 from tensorflow.python.keras.utils.np_utils import to_categorical
-
-from src.buffer import Buffer
-from src.image_transformations import process_frame
-from src.q_network import build_q_network
+from tensorflow.keras.layers import Conv2D, Dense, Flatten, Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
 
 EPSILON_MIN = 0.1
 EPSILON_DECAY = 0.00001
@@ -19,10 +19,15 @@ class Agent:
     def __init__(self, algorithm, action_space):
         self.algorithm = algorithm
         self.action_space = action_space
-        self.network = build_q_network(n_actions=action_space.n, input_shape=TARGET_SIZE)
+        self.network = self.build_q_network()
         self.epsilon = 1.0
         self.lives = 5
         self.buffer = Buffer()
+
+        if self.algorithm == Algorithm.SARSA:
+            self.__calc_q = self.__calc_sarsa_q
+        elif self.algorithm == Algorithm.Q_LEARNING:
+            self.__calc_q = self.__calc_q_learn_q
 
     def decrement_lives(self):
         self.lives -= 1
@@ -30,8 +35,9 @@ class Agent:
     def get_lives(self):
         return self.lives
 
-    def get_action(self, obs, training):
-        frame = process_frame(obs, TARGET_SIZE)
+    def get_action(self, training, obs=None, frame=None):
+        if frame is None:
+            frame = self.process_frame(obs)
         if self.epsilon > EPSILON_MIN:
             self.epsilon -= EPSILON_DECAY
         if (not training) or (np.random.random() > self.epsilon):
@@ -40,11 +46,10 @@ class Agent:
             return self.action_space.sample()
 
     def update(self, obs, action, next_obs, reward):
-        frame = process_frame(obs, TARGET_SIZE)
-        next_frame = process_frame(next_obs, TARGET_SIZE)
+        frame = self.process_frame(obs)
+        next_frame = self.process_frame(next_obs)
 
-        calculated_q = self.__calc_sarsa_q(next_obs,
-                                           next_frame) if self.algorithm == Algorithm.SARSA else self.__calc_q_learn_q(next_frame)
+        calculated_q = self.__calc_q(next_frame)
         target_q = reward + (DISCOUNT_FACTOR * calculated_q)
 
         self.buffer.add_experience(frame, next_frame, target_q, action)
@@ -63,8 +68,8 @@ class Agent:
     def __calc_q_learn_q(self, next_frame):
         return self.network.predict(next_frame)[0].max()
 
-    def __calc_sarsa_q(self, next_obs, next_frame):
-        new_action = self.get_action(next_obs, True)
+    def __calc_sarsa_q(self, next_frame):
+        new_action = self.get_action(training=True, frame=next_frame)
         return self.network.predict(next_frame)[0][new_action]
 
     def save_network(self, filepath):
@@ -72,6 +77,52 @@ class Agent:
 
     def load_network(self, filepath):
         self.network.load_weights(filepath)
+
+    def build_q_network(self, learning_rate=0.001):
+        model_input = Input(shape=(TARGET_SIZE[0], TARGET_SIZE[1], 1))
+        x = Conv2D(32, (8, 8), strides=4, activation='relu')(model_input)
+        x = Conv2D(64, (4, 4), strides=2, activation='relu')(x)
+        x = Conv2D(64, (3, 3), strides=1, activation='relu')(x)
+        x = Flatten()(x)
+        x = Dense(self.action_space.n)(x)
+
+        model = Model(model_input, x)
+        model.compile(Adam(learning_rate), loss=tf.keras.losses.Huber())
+
+        return model
+
+    @staticmethod
+    def process_frame(frame):
+        frame = frame.astype(np.uint8)
+        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+        frame = frame[36:36 + 150, 10:10 + 150]
+        frame = cv2.resize(frame, TARGET_SIZE, interpolation=cv2.INTER_NEAREST)
+        frame = frame.reshape((*TARGET_SIZE, 1))
+        frame = frame.reshape((-1, TARGET_SIZE[0], TARGET_SIZE[1], 1))
+        return frame
+
+
+class Buffer:
+    def __init__(self):
+        self.buffer_frames = []
+        self.buffer_next_frames = []
+        self.buffer_targets_q = []
+        self.buffer_actions = []
+
+    def add_experience(self, frame, next_frame, target_q, action):
+        self.buffer_frames.append(frame)
+        self.buffer_next_frames.append(next_frame)
+        self.buffer_targets_q.append(target_q)
+        self.buffer_actions.append(action)
+
+    def clear(self):
+        self.buffer_frames = []
+        self.buffer_next_frames = []
+        self.buffer_targets_q = []
+        self.buffer_actions = []
+
+    def size(self):
+        return len(self.buffer_frames)
 
 
 class Algorithm(Enum):
