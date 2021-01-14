@@ -78,7 +78,7 @@ class Agent:
     def load_network(self, filepath):
         self.network.load_weights(filepath)
 
-    def build_q_network(self, learning_rate=0.001):
+    def build_q_network(self, learning_rate=0.0005):
         model_input = Input(shape=(TARGET_SIZE[0], TARGET_SIZE[1], 1))
         x = Conv2D(32, (8, 8), strides=4, activation='relu')(model_input)
         x = Conv2D(64, (4, 4), strides=2, activation='relu')(x)
