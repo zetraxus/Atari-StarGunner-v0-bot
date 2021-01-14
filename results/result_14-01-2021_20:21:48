@@ -1,0 +1,64 @@
+Q_LEARNING - {'TEST_NUM': 10, 'EPISODES_NUM': 20, 'START_LEARNING_ITERATION': 100, 'PENALTY': -10000, 'PREMIUM': 200, 'LEARNING_RATE': 0.0005}
+20:22:11 Episode = 1 -> reward = 700.0 it = 1110, epsilon = 0.9889000000000505
+20:22:29 Episode = 2 -> reward = 900.0 it = 899, epsilon = 0.9799100000000914
+20:22:54 Episode = 3 -> reward = 1700.0 it = 1188, epsilon = 0.9680300000001455
+20:23:06 Episode = 4 -> reward = 1100.0 it = 643, epsilon = 0.9616000000001748
+20:23:39 Episode = 5 -> reward = 1000.0 it = 1531, epsilon = 0.9462900000002444
+20:24:02 Episode = 6 -> reward = 1000.0 it = 1117, epsilon = 0.9351200000002953
+20:24:14 Episode = 7 -> reward = 600.0 it = 599, epsilon = 0.9291300000003225
+20:24:33 Episode = 8 -> reward = 900.0 it = 886, epsilon = 0.9202700000003629
+20:25:05 Episode = 9 -> reward = 200.0 it = 1433, epsilon = 0.9059400000004281
+20:25:18 Episode = 10 -> reward = 500.0 it = 629, epsilon = 0.8996500000004567
+20:25:32 Episode = 11 -> reward = 700.0 it = 637, epsilon = 0.8932800000004857
+20:25:48 Episode = 12 -> reward = 400.0 it = 762, epsilon = 0.8856600000005204
+20:26:12 Episode = 13 -> reward = 500.0 it = 1055, epsilon = 0.8751100000005684
+20:26:28 Episode = 14 -> reward = 600.0 it = 719, epsilon = 0.8679200000006011
+20:26:49 Episode = 15 -> reward = 600.0 it = 931, epsilon = 0.8586100000006435
+20:27:04 Episode = 16 -> reward = 900.0 it = 672, epsilon = 0.851890000000674
+20:27:17 Episode = 17 -> reward = 100.0 it = 592, epsilon = 0.845970000000701
+20:27:59 Episode = 18 -> reward = 300.0 it = 1666, epsilon = 0.8293100000007768
+20:28:29 Episode = 19 -> reward = 600.0 it = 1216, epsilon = 0.8171500000008322
+20:28:56 Episode = 20 -> reward = 400.0 it = 1054, epsilon = 0.8066100000008801
+Reward (test) = 400.0
+Reward (test) = 600.0
+Reward (test) = 200.0
+Reward (test) = 400.0
+Reward (test) = 200.0
+Reward (test) = 0.0
+Reward (test) = 0.0
+Reward (test) = 200.0
+Reward (test) = 200.0
+Reward (test) = 200.0
+Avg test reward = 240.0
+SARSA - {'TEST_NUM': 10, 'EPISODES_NUM': 20, 'START_LEARNING_ITERATION': 100, 'PENALTY': -10000, 'PREMIUM': 200, 'LEARNING_RATE': 0.0005}
+20:34:59 Episode = 1 -> reward = 800.0 it = 1820, epsilon = 0.9646100000001611
+20:35:27 Episode = 2 -> reward = 200.0 it = 1181, epsilon = 0.942000000000264
+20:36:06 Episode = 3 -> reward = 800.0 it = 1490, epsilon = 0.913210000000395
+20:36:31 Episode = 4 -> reward = 500.0 it = 985, epsilon = 0.89452000000048
+20:37:00 Episode = 5 -> reward = 200.0 it = 1083, epsilon = 0.873870000000574
+20:37:40 Episode = 6 -> reward = 1100.0 it = 1377, epsilon = 0.8473400000006948
+20:39:02 Episode = 7 -> reward = 1100.0 it = 2590, epsilon = 0.7965500000009259
+20:39:30 Episode = 8 -> reward = 500.0 it = 906, epsilon = 0.7794400000010038
+20:40:02 Episode = 9 -> reward = 1200.0 it = 965, epsilon = 0.761150000001087
+20:40:21 Episode = 10 -> reward = 900.0 it = 638, epsilon = 0.7494000000011405
+20:40:47 Episode = 11 -> reward = 900.0 it = 826, epsilon = 0.7338900000012111
+20:41:22 Episode = 12 -> reward = 1000.0 it = 1043, epsilon = 0.7140400000013014
+20:42:33 Episode = 13 -> reward = 300.0 it = 1937, epsilon = 0.6763100000014731
+20:43:25 Episode = 14 -> reward = 800.0 it = 1393, epsilon = 0.6494600000015953
+20:43:55 Episode = 15 -> reward = 300.0 it = 852, epsilon = 0.6334300000016683
+20:45:29 Episode = 16 -> reward = 800.0 it = 2286, epsilon = 0.5887200000018717
+20:46:28 Episode = 17 -> reward = 600.0 it = 1455, epsilon = 0.5606300000019996
+20:47:00 Episode = 18 -> reward = 600.0 it = 825, epsilon = 0.5451400000020701
+20:47:53 Episode = 19 -> reward = 1100.0 it = 1310, epsilon = 0.5199500000021847
+20:48:57 Episode = 20 -> reward = 600.0 it = 1540, epsilon = 0.49016000000226567
+Reward (test) = 200.0
+Reward (test) = 400.0
+Reward (test) = 300.0
+Reward (test) = 500.0
+Reward (test) = 500.0
+Reward (test) = 600.0
+Reward (test) = 200.0
+Reward (test) = 200.0
+Reward (test) = 300.0
+Reward (test) = 200.0
+Avg test reward = 340.0

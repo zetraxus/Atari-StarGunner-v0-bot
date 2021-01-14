@@ -16,9 +16,10 @@ BATCH_SIZE = 32
 
 
 class Agent:
-    def __init__(self, algorithm, action_space):
+    def __init__(self, algorithm, action_space, learning_rate):
         self.algorithm = algorithm
         self.action_space = action_space
+        self.learning_rate = learning_rate
         self.network = self.build_q_network()
         self.epsilon = 1.0
         self.lives = 5
@@ -78,7 +79,7 @@ class Agent:
     def load_network(self, filepath):
         self.network.load_weights(filepath)
 
-    def build_q_network(self, learning_rate=0.0005):
+    def build_q_network(self):
         model_input = Input(shape=(TARGET_SIZE[0], TARGET_SIZE[1], 1))
         x = Conv2D(32, (8, 8), strides=4, activation='relu')(model_input)
         x = Conv2D(64, (4, 4), strides=2, activation='relu')(x)
@@ -87,7 +88,7 @@ class Agent:
         x = Dense(self.action_space.n)(x)
 
         model = Model(model_input, x)
-        model.compile(Adam(learning_rate), loss=tf.keras.losses.Huber())
+        model.compile(Adam(self.learning_rate), loss=tf.keras.losses.Huber())
 
         return model
 
