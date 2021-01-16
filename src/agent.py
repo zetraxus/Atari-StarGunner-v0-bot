@@ -8,18 +8,18 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten, Input
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
-EPSILON_MIN = 0.1
-EPSILON_DECAY = 0.00001
-DISCOUNT_FACTOR = 0.95
 TARGET_SIZE = (84, 84)
 BATCH_SIZE = 32
 
 
 class Agent:
-    def __init__(self, algorithm, action_space, learning_rate):
+    def __init__(self, algorithm, action_space, params):
         self.algorithm = algorithm
         self.action_space = action_space
-        self.learning_rate = learning_rate
+        self.learning_rate = params['LEARNING_RATE']
+        self.epsilon_min = params['EPSILON_MIN']
+        self.epsilon_decay = params['EPSILON_DECAY']
+        self.discount_factor = params['DISCOUNT_FACTOR']
         self.network = self.build_q_network()
         self.epsilon = 1.0
         self.lives = 5
@@ -39,8 +39,8 @@ class Agent:
     def get_action(self, training, obs=None, frame=None):
         if frame is None:
             frame = self.process_frame(obs)
-        if self.epsilon > EPSILON_MIN:
-            self.epsilon -= EPSILON_DECAY
+        if self.epsilon > self.epsilon_min:
+            self.epsilon -= self.epsilon_decay
         if (not training) or (np.random.random() > self.epsilon):
             return self.network.predict(frame)[0].argmax()
         else:
@@ -51,7 +51,7 @@ class Agent:
         next_frame = self.process_frame(next_obs)
 
         calculated_q = self.__calc_q(next_frame)
-        target_q = reward + (DISCOUNT_FACTOR * calculated_q)
+        target_q = reward + (self.discount_factor * calculated_q)
 
         self.buffer.add_experience(frame, next_frame, target_q, action)
 
