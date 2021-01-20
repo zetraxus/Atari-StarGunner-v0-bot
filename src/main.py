@@ -8,7 +8,7 @@ from datetime import datetime
 
 from src.utils import print_logs
 
-MODEL_WEIGHTS_PATH = "model_weights/"
+MODEL_WEIGHTS_PATH = "../model_weights/"
 RESULTS_PATH = "../results/"
 SAVE_WEIGHTS, LOAD_WEIGHTS, RENDER, SAVE_RESULTS = True, False, False, True
 # ALGORITHMS = [Algorithm.Q_LEARNING, Algorithm.SARSA]
