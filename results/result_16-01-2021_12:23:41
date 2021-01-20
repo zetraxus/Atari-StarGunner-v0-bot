@@ -1,0 +1,24 @@
+Q_LEARNING - {'TEST_NUM': 10, 'EPISODES_NUM': 500, 'START_LEARNING_ITERATION': 100, 'PENALTY': -10000, 'PREMIUM': 200, 'LEARNING_RATE': 0.0001, 'EPSILON_MIN': 0.1, 'EPSILON_DECAY': 1e-06, 'DISCOUNT_FACTOR': 0.95}
+Reward (test) = 200.0, it = 2538
+Reward (test) = 400.0, it = 605
+Reward (test) = 300.0, it = 830
+Reward (test) = 600.0, it = 1869
+Reward (test) = 400.0, it = 1625
+Reward (test) = 200.0, it = 1449
+Reward (test) = 300.0, it = 1987
+Reward (test) = 500.0, it = 1386
+Reward (test) = 400.0, it = 2239
+Reward (test) = 500.0, it = 1368
+Avg test reward = 380.0
+SARSA - {'TEST_NUM': 10, 'EPISODES_NUM': 500, 'START_LEARNING_ITERATION': 100, 'PENALTY': -10000, 'PREMIUM': 200, 'LEARNING_RATE': 0.0001, 'EPSILON_MIN': 0.1, 'EPSILON_DECAY': 1e-06, 'DISCOUNT_FACTOR': 0.95}
+Reward (test) = 900.0, it = 929
+Reward (test) = 600.0, it = 777
+Reward (test) = 1200.0, it = 1070
+Reward (test) = 800.0, it = 1140
+Reward (test) = 800.0, it = 1181
+Reward (test) = 500.0, it = 818
+Reward (test) = 900.0, it = 1338
+Reward (test) = 1400.0, it = 1560
+Reward (test) = 400.0, it = 822
+Reward (test) = 800.0, it = 1139
+Avg test reward = 830.0
