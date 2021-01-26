@@ -1,16 +1,16 @@
 import gym
 
-from src.agent import Agent
-from src.test import test
-from src.train import train
-from src.agent import Algorithm
+from agent import Agent
+from test import test
+from train import train
+from agent import Algorithm
 from datetime import datetime
 
-from src.utils import print_logs
+from utils import print_logs
 
-MODEL_WEIGHTS_PATH = "../model_weights/"
-RESULTS_PATH = "../results/"
-SAVE_WEIGHTS, LOAD_WEIGHTS, RENDER, SAVE_RESULTS = True, False, False, True
+MODEL_WEIGHTS_PATH = "model_weights/"
+RESULTS_PATH = "results/"
+SAVE_WEIGHTS, LOAD_WEIGHTS, RENDER, SAVE_RESULTS = False, False, False, True
 # ALGORITHMS = [Algorithm.Q_LEARNING, Algorithm.SARSA]
 ALGORITHMS = [Algorithm.Q_LEARNING]
 params = {'TEST_NUM': 10, 'EPISODES_NUM': 1000, 'START_LEARNING_ITERATION': 100, 'PENALTY': -10000,

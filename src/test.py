@@ -1,4 +1,4 @@
-from src.utils import print_logs
+from utils import print_logs
 
 
 def single_test(agent, env, render, save_results, log_filename):
