@@ -9,7 +9,6 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
 TARGET_SIZE = (84, 84)
-BATCH_SIZE = 32
 
 
 class Agent:
@@ -20,6 +19,7 @@ class Agent:
         self.epsilon_min = params['EPSILON_MIN']
         self.epsilon_decay = params['EPSILON_DECAY']
         self.discount_factor = params['DISCOUNT_FACTOR']
+        self.batch_size = params['BATCH_SIZE']
         self.network = self.build_q_network()
         self.epsilon = 1.0
         self.lives = 5
@@ -55,7 +55,7 @@ class Agent:
 
         self.buffer.add_experience(frame, next_frame, target_q, action)
 
-        if self.buffer.size() == BATCH_SIZE:
+        if self.buffer.size() == self.batch_size:
             with tf.GradientTape() as tape:
                 q_values = self.network(self.buffer.buffer_frames)
                 action_one_hot = to_categorical(self.buffer.buffer_actions, self.action_space.n)

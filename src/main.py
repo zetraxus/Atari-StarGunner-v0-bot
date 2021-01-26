@@ -14,7 +14,7 @@ SAVE_WEIGHTS, LOAD_WEIGHTS, RENDER, SAVE_RESULTS = False, False, True, False
 ALGORITHMS = [Algorithm.Q_LEARNING, Algorithm.SARSA]
 params = {'TEST_NUM': 2, 'EPISODES_NUM': 5, 'START_LEARNING_ITERATION': 100, 'PENALTY': -10000,
           'PREMIUM': 200, 'LEARNING_RATE': 0.0001, 'EPSILON_MIN': 0.1, 'EPSILON_DECAY': 0.000001,
-          'DISCOUNT_FACTOR': 0.95}
+          'DISCOUNT_FACTOR': 0.95, 'BATCH_SIZE': 32}
 
 if __name__ == "__main__":
     environment = gym.make("StarGunner-v0", frameskip=4)
