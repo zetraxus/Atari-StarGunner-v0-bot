@@ -10,7 +10,7 @@ from utils import print_logs
 
 MODEL_WEIGHTS_PATH = "model_weights/"
 RESULTS_PATH = "results/"
-SAVE_WEIGHTS, LOAD_WEIGHTS, RENDER, SAVE_RESULTS = False, False, False, False
+SAVE_WEIGHTS, LOAD_WEIGHTS, RENDER, SAVE_RESULTS = False, False, True, False
 ALGORITHMS = [Algorithm.Q_LEARNING, Algorithm.SARSA]
 params = {'TEST_NUM': 2, 'EPISODES_NUM': 5, 'START_LEARNING_ITERATION': 100, 'PENALTY': -10000,
           'PREMIUM': 200, 'LEARNING_RATE': 0.0001, 'EPSILON_MIN': 0.1, 'EPSILON_DECAY': 0.000001,
