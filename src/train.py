@@ -1,5 +1,5 @@
 from datetime import datetime
-from src.utils import print_logs
+from utils import print_logs
 
 
 def get_reward_for_learning(agent, game_reward, info, params):
